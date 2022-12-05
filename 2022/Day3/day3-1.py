@@ -4,11 +4,12 @@ def priority(letter):
     return ord(letter.lower()) - 70
 
 lines = open("input.txt").readlines()
+
 sum = 0
-sets = [{}, {}, {}]
-for i in range(len(lines)):
-    sets[i%3] = set(list(lines[i].strip()))
-    if i%3 == 2:
-        sum += priority(list(set.intersection(*sets))[0])
-        
+for line in lines:
+    length = len(line)
+    c1 = set(list(line[0:int(length/2)]))
+    c2 = set(list(line[int(length/2): length - 1]))
+    
+    sum += priority(list(c1.intersection(c2))[0])
 print(sum)
