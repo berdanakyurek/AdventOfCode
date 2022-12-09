@@ -69,6 +69,7 @@ int main(){
     line += ",";
 
     int score = 0;
+    int finishedCount = 0;
     while (end != -1) {
         string val = line.substr(start, end - start);
         start = end + 1;
@@ -80,18 +81,20 @@ int main(){
                 pair<int, int> p2 = card[val];
                 rows[i][p2.first][p2.second] = '0';
                 cols[i][p2.second][p2.first] = '0';
-
-                if(stoi(rows[i][p2.first]) == 0 or stoi(cols[i][p2.second]) == 0){
-                    int res = 0;
-                    map<string, pair<int, int>>::iterator it;
-                    for (it = card.begin(); it != card.end(); it++){
-                        int rowN = it->second.first;
-                        int colN = it->second.second;
-                        if(rows[i][rowN][colN] == '1')
-                            res += stoi(it->first);
+                if(stoi(rows[i][p2.first]) == 0 or stoi(cols[i][p2.second]) == 0) {
+                    finishedCount ++;
+                    if(finishedCount == dictList.size()) {
+                        int res = 0;
+                        map<string, pair<int, int>>::iterator it;
+                        for (it = dictList[i].begin(); it != dictList[i].end(); it++){
+                            int rowN = it->second.first;
+                            int colN = it->second.second;
+                            if(rows[i][rowN][colN] == '1')
+                                res += stoi(it->first);
+                        }
+                        cout << res * stoi(val) << endl;
+                        return 0;
                     }
-                    cout << res * stoi(val) << endl;
-                    return 0;
                 }
                     
             }
